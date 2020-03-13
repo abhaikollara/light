@@ -81,6 +81,8 @@ class Evaluator:
 
         if isinstance(ast_node, ast.BinaryOp):
             return self.eval_binary_op(ast_node, env)
+        if isinstance(ast_node, ast.PrefixOp):
+            return self.eval_prefix_op(ast_node, env)
 
         if isinstance(ast_node, ast.FunctionLiteral):
             return self.eval_func_literal(ast_node, env)
@@ -88,7 +90,7 @@ class Evaluator:
             return self.eval_func_call(ast_node, env)
         else:
             raise ValueError(
-                f"Exception of type {ast_node} cannot be evaluated")
+                f"Expression of type {ast_node} cannot be evaluated")
 
     def eval_identifier(self, ast_node, env):
         return env.get(ast_node.ident)
@@ -108,6 +110,12 @@ class Evaluator:
         value = str(ast_node.literal)
 
         return objects.String(value)
+
+    def eval_prefix_op(self, ast_node, env):
+        op = ast_node.op
+        right = self.eval_expression(ast_node.right, env)
+        if isinstance(op, tokens.MINUS):
+            return objects.Integer(-right)
 
     def eval_binary_op(self, ast_node, env):
         op = ast_node.op
