@@ -16,6 +16,7 @@ Run `python repl.py`
 
 ## TODO
 - [ ] Figure out how to make closures work
+- [ ] Grouped expressions
 - [ ] Implement builtins
   - [ ] Implement `print`
 - [ ] Implement strings, floats as datatypes
