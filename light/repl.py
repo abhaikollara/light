@@ -17,7 +17,9 @@ class Repl:
         while True:
             print(">>>", end=" ")
             try:
-                line = str(input())
+                line = str(input()).strip()
+                if line == "":
+                    continue
                 ast = self.parse(line)
 
                 val = self.eval(ast)
