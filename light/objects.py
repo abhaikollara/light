@@ -35,9 +35,10 @@ class Returned:
 
 
 class Function:
-    def __init__(self, params, body):
+    def __init__(self, params, body, closure):
         self.params = params
         self.body = body
+        self.closure = closure
 
     def __repr__(self):
         return f"{repr(self.params)}"

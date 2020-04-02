@@ -161,7 +161,7 @@ class Evaluator:
         body = ast_node.body
         name = ast_node.name
 
-        func = objects.Function(params, body)
+        func = objects.Function(params, body, closure=env)
 
         if name is not None:
             env.set(name, func)
@@ -175,7 +175,7 @@ class Evaluator:
         return self.eval_func(func, args, env)
 
     def eval_func(self, func, args, env):
-        local_env = Environment(parent=env)
+        local_env = Environment(parent=func.closure)
         params = func.params
         body = func.body
 
