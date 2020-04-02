@@ -5,7 +5,9 @@ An simple interpreter written in Python
 Will add it soon
 
 ## TODO
-- [ ] Implement `print` equivalent in light
+- [ ] Figure out how to make closures work
+- [ ] Implement builtins
+  - [ ] Implement `print`
 - [ ] Implement strings, floats as datatypes
 
 
