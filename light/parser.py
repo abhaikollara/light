@@ -195,7 +195,7 @@ class Parser:
         if op in {'*', '/'}:
             return 60
         
-        return 0
+        return -1
 
     def nud(self, token):
         if isinstance(token, tokens.IDENT):
@@ -203,6 +203,12 @@ class Parser:
                 return self.parse_function_call()
             else:
                 return ast.Identifier(token)
+        if isinstance(token, tokens.LPARAN):
+            e = self.expr()
+            if not isinstance(self.next, tokens.RPARAN):
+                raise ParserError(f"Expected `)` found {self.next}")
+            self.step()
+            return e
         if isinstance(token, tokens.INT):
             return ast.IntLiteral(token)
         if isinstance(token, tokens.FUNC):
@@ -218,6 +224,7 @@ class Parser:
 
     
     def led(self, left, token):
+        # Cleaner code here
         if isinstance(token, (tokens.PLUS, tokens.MINUS, tokens.ASTERISK, tokens.SLASH)):
             return ast.BinaryOp(token, left , self.expr(self.bp(token)))
         if isinstance(token, (tokens.EQ, tokens.NEQ, tokens.LT, tokens.GT, tokens.LTE, tokens.GTE)):
